@@ -9,7 +9,8 @@ import {Platform,TextInput,Button,View} from 'react-native';
                 <TextInput placeholder="E-mail"/>
                 <TextInput placeholder="Password"/>
                 <Button title="Login"
-                onPress={()=>this.props.navigation.navigate('home1')}
+                 onPress={()=>this.props.navigation.navigate('home1')}
+
                 />
             </View>
         );
