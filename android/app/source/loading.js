@@ -1,4 +1,4 @@
-import React from 'react'
+/** import React from 'react'
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native'
 import firebase from 'react-native-firebase'
 export default class Loading extends React.Component {
@@ -23,4 +23,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   }
-})
+})*/

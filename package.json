@@ -9,9 +9,9 @@
   "dependencies": {
     "firebase": "^5.6.0",
     "react": "16.6.1",
-    "react-native": "0.57.6",
+    "react-native": "^0.57.6",
     "react-native-gesture-handler": "^1.0.10",
-    "react-navigation": "^3.0.2"
+    "react-navigation": "^3.0.5"
   },
   "devDependencies": {
     "babel-jest": "23.6.0",
