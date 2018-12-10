@@ -1,6 +1,7 @@
 import React , {Component} from 'react';
-import {Platform,TextInput,Button,View} from 'react-native';
-import firebase from 'react-native-firebase'
+import {Platform,Text,StyleSheet,View} from 'react-native';
+import firebase from '@firebase/app';
+import '@firebase/auth';
  class Main extends Component{
     state = { currentUser: null }
     componentDidMount() {
