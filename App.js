@@ -1,37 +1,60 @@
-import React , {Component} from 'react'
-import {Platform,Text,Button,View} from 'react-native';
-import {createStackNavigator,createAppContainer} from 'react-navigation';
-import Main from './android/app/source/main';
+import React from 'react';
+import {
+createDrawerNavigator,
+TabNavigator,
+createStackNavigator,
+createAppContainer
+} from 'react-navigation';
+import { Platform } from 'react-native';
+import { Provider } from 'react-redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
-import Login from './android/app/source/login';
-import Signup from './android/app/source/signup';
+import productsReducer from './android/app/source/productreducer';
+import userReducer from './android/app/source/userreducer';
+import ProductList from './android/app/source/productlist';
 
-import firebase from '@firebase/app';
-import '@firebase/auth';
-const firebaseConfig=
+
+import MyProfile from './android/app/source/myprofile';
+
+
+const ProductsNavigator = createStackNavigator({
+ProductList: { screen: ProductList },
+
+});
+
+let Navigator;
+if (Platform.OS === 'ios') {
+Navigator = TabNavigator(
 {
-  apiKey:'AIzaSyBdYcPjQ62WPgR80UszZioR6_6Rfnxy0pM',
-  authDomain:'myapp-5103e.firebaseapp.com',
-  firebase_url: 'https://myapp-5103e.firebaseio.com',
-  project_id: 'myapp-5103e',
-  storage_bucket: 'myapp-5103e.appspot.com',
+Home: { screen: ProductsNavigator },
 
 
-};
-firebase.initializeApp(firebaseConfig);
-console.log(firebase.app().name);
-
-const app=createStackNavigator({
-  
-
- Login: Login,
- Main: Main,
- Signup:Signup,
- 
+MyProfile: { screen: MyProfile },
 },
 {
-  initialRouteName: 'Signup'
+tabBarOptions: {
+inactiveTintColor: '#aaa',
+activeTintColor: '#000',
+showLabel: true,
+},
+},
+);
+} else {
+Navigator = createDrawerNavigator({
+Home: { screen: ProductsNavigator },
+
+MyProfile: { screen: MyProfile },
+
+});
 }
-  
-)
-export default createAppContainer(app);
+const AppContainer = createAppContainer(Navigator);
+const store = createStore(
+combineReducers({  productsReducer, userReducer }),
+applyMiddleware(thunk),
+);
+export default () => (
+<Provider store={store}>
+<AppContainer/>
+</Provider>
+);

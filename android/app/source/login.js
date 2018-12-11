@@ -1,58 +1,68 @@
-import React from 'react'
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
-import firebase from '@firebase/app';
-import '@firebase/auth';
-export default class Login extends React.Component {
-  state = { email: '', password: '', errorMessage: null }
-  handleLogin = () => {
-    const { email, password } = this.state
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => this.props.navigation.navigate('Main'))
-      .catch(error => this.setState({ errorMessage: error.message }))
-    console.log('handleLogin')
-  }
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Login</Text>
-        {this.state.errorMessage &&
-          <Text style={{ color: 'red' }}>
-            {this.state.errorMessage}
-          </Text>}
-        <TextInput
-          style={styles.textInput}
-          autoCapitalize="none"
-          placeholder="Email"
-          onChangeText={email => this.setState({ email })}
-          value={this.state.email}
-        />
-        <TextInput
-          secureTextEntry
-          style={styles.textInput}
-          autoCapitalize="none"
-          placeholder="Password"
-          onChangeText={password => this.setState({ password })}
-          value={this.state.password}
-        />
-        <Button title="Login" onPress={this.handleLogin} />
-       
-      </View>
-    )
-  }
+import React from 'react';
+import { View, Button as LinkButton } from 'react-native';
+import { Form, Item, Input, Content, Button, Text, Spinner } from 'native-base';
+import PropTypes from 'prop-types';
+class Login extends React.Component {
+state = { email: null, password: null };
+render() {
+return (
+<View style={{ flex: 1 }}>
+<Content>
+<Form>
+<Item>
+<Input
+placeholder="e-mail"
+keyboardType={'email-address'}
+autoCapitalize={'none'}
+onChangeText={email => this.setState({ email })}
+/>
+</Item>
+<Item last>
+<Input
+placeholder="password"
+secureTextEntry
+onChangeText={password => this.setState({ password })}
+/>
+</Item>
+<Button
+block
+disabled={this.props.loading}
+style={{ margin: 20 }}
+onPress={() =>
+this.props.login({
+email: this.state.email,
+password: this.state.password,
+})}
+>
+<Text>Login</Text>
+</Button>
+</Form>
+<LinkButton
+title={'or Register'}
+onPress={() => this.props.changeToRegister()}
+/>
+{this.props.loading && <Spinner />}
+</Content>
+{this.props.error && (
+<Text
+style={{
+alignSelf: 'center',
+color: 'red',
+position: 'absolute',
+bottom: 10,
+}}
+>
+{this.props.error}
+</Text>
+)}
+</View>
+);
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  textInput: {
-    height: 40,
-    width: '90%',
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginTop: 8
-  }
-})
+}
+Login.propTypes = {
+error: PropTypes.string,
+loading: PropTypes.bool,
+login: PropTypes.func.isRequired,
+changeToRegister: PropTypes.func.isRequired,
+};
+export default Login;
