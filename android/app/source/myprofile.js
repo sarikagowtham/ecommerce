@@ -65,7 +65,7 @@ error={this.props.error}
 </Item>
 </Item>
 <Item disabled>
-<Item fixedLabel>;
+<Item fixedLabel>
 <Label>Postcode</Label>
 <Input disabled placeholder=
 {this.props.user.postcode} />

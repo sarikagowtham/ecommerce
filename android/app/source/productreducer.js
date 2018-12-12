@@ -2,6 +2,9 @@ import {get} from './api';
 const FETCH = 'productreducer/FETCH';
 const FETCH_SUCCESS = 'productreducer/FETCH_SUCCESS';
 const FETCH_ERROR = 'productreducer/FETCH_ERROR';
+const ADD_TO_CART = 'productreducer/ADD_TO_CART';
+const REMOVE_FROM_CART = 'productreducer/REMOVE_FROM_CART';
+const RESET_CART = 'productreducer/RESET_CART';
 const initialState = {
     loading: false,
     products: [],
@@ -21,10 +24,49 @@ error: null,
 };
 case FETCH_ERROR:
 return { ...state, error: action.payload.error, loading: false };
+case ADD_TO_CART:
+product = state.cart.find(p => p.id ===
+action.payload.product.id);
+if (product) {
+product.quantity += 1;
+return {
+...state,
+cart: state.cart.slice(),
+};
+}
+product = action.payload.product;
+product.quantity = 1;
+return {
+...state,
+cart: state.cart.slice().concat([action.payload.product]),
+};
+case REMOVE_FROM_CART:
+i = state.cart.findIndex(p => p.id ===
+action.payload.product.id);
+if (state.cart[i].quantity === 1) {
+state.cart.splice(i, 1);
+} else {
+state.cart[i].quantity -= 1;
+}
+return {
+...state,
+cart: state.cart.slice(),
+};
+case RESET_CART:
+return {
+...state,
+cart: [],
+};
 default:
 return state;
 }
 }
+export function addProductToCart(product) {
+    return { type: ADD_TO_CART, payload: { product } };
+    }
+    export function removeProductFromCart(product) {
+    return { type: REMOVE_FROM_CART, payload: { product } };
+    }
 export function fetchProducts() {
     return dispatch => {
     dispatch({ type: FETCH });
@@ -35,3 +77,6 @@ export function fetchProducts() {
     .catch(error => dispatch({ type: FETCH_ERROR, payload: { error } }));
     };
     }
+    export function resetCart() {
+        return { type: RESET_CART };
+        }
