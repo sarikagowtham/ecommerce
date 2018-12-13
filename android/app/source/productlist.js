@@ -22,7 +22,7 @@ componentWillMount() {
 this.props.fetchProducts();
 }
 onProductPress(product) {
-this.props.navigation.navigate('Login', { product });
+this.props.navigation.navigate('ProductDetail', { product });
 }
 render() {
 return (

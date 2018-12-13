@@ -38,6 +38,14 @@ setTimeout(() => reject('Unauthorised'), 1000);
 return null;
 }
 break;
+case '/pay':
+if (data.card.cvc === '123') {
+response = true;
+} else {
+setTimeout(() => reject('Payment not authorised'), 1000);
+return null;
+}
+break;
 
 
 case '/register':

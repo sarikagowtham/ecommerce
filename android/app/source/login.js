@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Button as LinkButton } from 'react-native';
-import { Form, Item, Input, Content, Button, Text, Spinner } from 'native-base';
+import {Text, View, Button as LinkButton } from 'react-native';
+import { Form, Item, Input, Content, Button, Spinner } from 'native-base';
 import PropTypes from 'prop-types';
 class Login extends React.Component {
 state = { email: null, password: null };

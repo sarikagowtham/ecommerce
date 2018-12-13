@@ -1,12 +1,13 @@
 import {get} from './api';
-const FETCH = 'productreducer/FETCH';
-const FETCH_SUCCESS = 'productreducer/FETCH_SUCCESS';
-const FETCH_ERROR = 'productreducer/FETCH_ERROR';
-const ADD_TO_CART = 'productreducer/ADD_TO_CART';
-const REMOVE_FROM_CART = 'productreducer/REMOVE_FROM_CART';
-const RESET_CART = 'productreducer/RESET_CART';
+const FETCH = 'products/FETCH';
+const FETCH_SUCCESS = 'products/FETCH_SUCCESS';
+const FETCH_ERROR = 'products/FETCH_ERROR';
+const ADD_TO_CART = 'products/ADD_TO_CART';
+const REMOVE_FROM_CART = 'products/REMOVE_FROM_CART';
+const RESET_CART = 'products/RESET_CART';
 const initialState = {
     loading: false,
+    cart: [],
     products: [],
 };
 export default function reducer(state = initialState, action = {}) {
